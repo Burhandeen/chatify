@@ -9,14 +9,15 @@ import messageRoutes from "./routes/message.routes.js"
 import { connectDB } from "./lib/db.js"
 
 
-dotenv.config();
+//dotenv.config();
+import { ENV } from "./lib/env.js"
 
 //const express = require("express");
 
 const app = express();
 const __dirname = path.resolve();
 
-const PORT = process.env.PORT || 2000;
+const PORT = ENV.PORT || 2000;
 
 app.use(express.json()); //req.body
 
@@ -24,7 +25,7 @@ app.use("/api/auth", authroutes);
 app.use("/api/messages", messageRoutes);
 
 //make ready for deployment
-if(process.env.NODE_ENV === "production"){
+if(ENV.NODE_ENV === "production"){
     app.use(express.static(path.join(__dirname, "../frontend/dist")))
 
     app.get("*", (req, res) => {
